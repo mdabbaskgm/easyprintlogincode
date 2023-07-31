@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banglarbhumi Easyprint</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(-45deg, #f06, #9f6, #06f);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s linear infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 2s ease;
+        }
+
+        .code {
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .copy-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            animation: glowing 2s ease-in-out infinite;
+        }
+
+        .copy-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        @keyframes glowing {
+            0%, 100% {
+                box-shadow: 0 0 5px 5px rgba(0, 123, 255, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 5px 10px rgba(0, 123, 255, 0.9);
+            }
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #888;
+            margin-top: 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: #007bff;">Extension Login Code:</h1>
+        <div class="code" id="loginCode"></div>
+        <button class="copy-button" id="copyButton">Copy The Code</button>
+        <div class="footer">Click <b>copy the code</b> button to copy the <b>"login code"</b></div>
+        <div class="footer">This login code will work on a single System</div>
+    </div>
+
+    <script>
+        // Fetch JSON data from the URL
+        fetch('https://bgbhumi.000webhostapp.com/get_login_code.php')
+            .then(response => response.json())
+            .then(data => {
+                const loginCode = data.loginCode;
+                displayLoginCode(loginCode);
+
+                // Add click event to the copy button
+                const copyButton = document.getElementById('copyButton');
+                copyButton.addEventListener('click', () => {
+                    copyToClipboard(loginCode);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+        // Function to display loginCode data beautifully
+        function displayLoginCode(loginCode) {
+            const loginCodeElement = document.getElementById('loginCode');
+            loginCodeElement.textContent = loginCode;
+        }
+
+        // Function to copy loginCode to clipboard
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Login code copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
